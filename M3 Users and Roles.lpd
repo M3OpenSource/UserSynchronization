@@ -1,0 +1,1736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process className="FgProcess" connectionName="" designerVersion="9.1.0"
+  id="M3 Users and Roles" priority="0" schemaVersion="1.0" service="" title="">
+  <description/>
+  <processUserNode>
+    <from/>
+    <subject/>
+    <content/>
+    <displayType>1</displayType>
+    <displayContent/>
+    <displayName/>
+    <hideActions>false</hideActions>
+  </processUserNode>
+  <activities>
+    <activity activityType="START" caption="Start"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaStart"
+      id="Start" x="30" y="730">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="String" name="GivenName" propType="SIMPLE">
+        <anyData><![CDATA[%22%22]]></anyData>
+      </prop>
+      <prop className="String" name="FamilyName" propType="SIMPLE">
+        <anyData><![CDATA[%22%22]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="variableType" propType="SIMPLE">
+        <anyData>NONE</anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="BRANCH" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaBranch"
+      id="BranchOperation1" x="430" y="130">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="Condition" name="conditions" nbrCols="1"
+        nbrRows="3" propType="ARRAY">
+        <pfObject className="pfObject-Condition" name="0" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Create]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn10]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22CREATE%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="1" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Update]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn20]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22UPDATE%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="2" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Delete]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn30]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22DELETE%22]]></anyData>
+          </prop>
+        </pfObject>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Identity"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn10" x="630" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22security%22+%26+_objectName%3D%22Identity%22+%26+_actionName%3D%22Create%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_authenticatedUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Service%3D%22SSOPV2%22+%26+Identity%3D%22User%3A%3C%21USID%3E%22+%26+ServiceType%3D%22FormBased%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString><![CDATA[Error+encountered+executing+process%0D%0A%0D%0AProcess%3A+M3User%0D%0AActivity+id%3A+%3C%21this%3E%0D%0A%0D%0AError+code%3A+%3C%21this_errorCode%3E%0D%0AInformation+code%3A+%3C%21this_informationCode%3E%0D%0A%0D%0AReturn+message%3A+%3C%21this_returnMessage%3E%0D%0A%0D%0AOutput+data%3A%0D%0A%3C%21this_outputData%3E%0D%0A%0D%0A]]></logString>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn10" x="730" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn11" x="830" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22person%22+%26+_objectName%3D%22Actor%22+%26+_actionName%3D%22Create%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Identity%3D%22%3C%21USID%3E%22+%26+Service%3D%22SSOPV2%22+%26+Actor%3D%22%3C%21USID%3E%22+%26+PersonName.GivenName%3D%22%3C%21GivenName%3E%22+%26+PersonName.FamilyName%3D%22%3C%21FamilyName%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn11" x="930" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor-Identity"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn12" x="1030" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22security%22+%26+_objectName%3D%22IdentityActor%22+%26+_actionName%3D%22AssignExistingIdentityToActor%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Service%3D%22SSOPV2%22+%26+Identity%3D%22User%3A%3C%21USID%3E%22+%26+Actor%3D%22%3C%21USID%3E%22+%26+IdentityActor%3D%22%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn12" x="1130" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor-Role"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn13" x="1230" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22security%22+%26+_objectName%3D%22ActorRole%22+%26+_actionName%3D%22AssignExistingRoleToActor%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Actor%3D%22%3C%21USID%3E%22+%26+ActorRole.Role%3D%22InbasketUser_ST%22+%26+ActorRole.Actor%3D%22%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn13" x="1330" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="User"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn14" x="1430" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiUserProfile%22+%26+_actionName%3D%22Create%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiUserProfile%3D%22%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn14" x="1530" y="30">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn20" x="630" y="130">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22person%22+%26+_objectName%3D%22Actor%22+%26+_actionName%3D%22Update%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22++%26+Actor%3D%22%3C%21USID%3E%22+%26+PersonName.GivenName%3D%22%3C%21GivenName%3E%22++%26+PersonName.FamilyName%3D%22%3C%21FamilyName%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn20" x="730" y="130">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="User"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn30" x="630" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiUserProfile%22+%26+_actionName%3D%22Delete%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiUserProfile%3D%22%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn30" x="730" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor-Role"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn31" x="830" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22security%22+%26+_objectName%3D%22ActorRole%22+%26+_actionName%3D%22Delete%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Actor%3D%22%3C%21USID%3E%22+%26+ActorRole.Role%3D%22InbasketUser_ST%22+%26+ActorRole.Actor%3D%22%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn31" x="930" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor-Identity"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn32" x="1030" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22security%22+%26+_objectName%3D%22IdentityActor%22+%26+_actionName%3D%22Delete%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Service%3D%22SSOPV2%22+%26+Identity%3D%22User%3A%3C%21USID%3E%22+%26+Actor%3D%22%3C%21USID%3E%22+%26+IdentityActor%3D%22%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn32" x="1130" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn33" x="1230" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22person%22+%26+_objectName%3D%22Actor%22+%26+_actionName%3D%22CompleteActorDelete%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Actor%3D%22%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn33" x="1330" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Identity"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn34" x="1430" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22security%22+%26+_objectName%3D%22Identity%22+%26+_actionName%3D%22Delete%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Service%3D%22SSOPV2%22+%26+Identity%3D%22User%3A%3C%21USID%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn34" x="1530" y="230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="END" caption="End"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaEnd"
+      id="End" x="1730" y="730">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="processStatus" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="variableType" propType="SIMPLE">
+        <anyData>NONE</anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="BRANCH" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaBranch"
+      id="BranchDocumentName" x="130" y="730">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="Condition" name="conditions" nbrCols="1"
+        nbrRows="4" propType="ARRAY">
+        <pfObject className="pfObject-Condition" name="0" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[M3+User%0ACMNUSR]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[Assign1]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[DocumentName+%3D%3D+%22CMNUSR%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="1" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[M3+Role%0ACMNROL]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[BranchOperation3]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[DocumentName+%3D%3D+%22CMNROL%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="2" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[M3+Email+address%0ACEMAIL]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[BranchOperation2]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[DocumentName+%3D%3D+%22CEMAIL%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="3" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[M3+User-Role%0ACMNRUS]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[BranchOperation4]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[DocumentName+%3D%3D+%22CMNRUS%22]]></anyData>
+          </prop>
+        </pfObject>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="BRANCH" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaBranch"
+      id="BranchOperation3" x="430" y="930">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="Condition" name="conditions" nbrCols="1"
+        nbrRows="3" propType="ARRAY">
+        <pfObject className="pfObject-Condition" name="0" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Create]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn70]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22CREATE%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="1" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Update]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn80]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22UPDATE%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="2" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Delete]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn90]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22DELETE%22]]></anyData>
+          </prop>
+        </pfObject>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Task"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn70" x="630" y="830">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiTask%22+%26+_actionName%3D%22Create%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_authenticatedUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiTask.TaskName%3D%22%3C%21ROLL%3E%22+%26+PfiTask.TaskType%3D%222%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn70" x="730" y="830">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Task"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn80" x="630" y="930">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiTask%22+%26+_actionName%3D%22Update%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_authenticatedUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiTask.TaskName%3D%22%3C%21ROLL%3E%22+%26+PfiTask.TaskType%3D%222%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn80" x="730" y="930">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Task"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn90" x="630" y="1030">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiTask%22+%26+_actionName%3D%22Delete%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_authenticatedUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiTask.TaskName%3D%22%3C%21ROLL%3E%22+%26+PfiTask.TaskType%3D%222%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn90" x="730" y="1030">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ASSGN" caption="GivenName%0D%0AFamilyName"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaAssign"
+      id="Assign1" x="330" y="130">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="String" name="GivenName" propType="SIMPLE">
+        <anyData><![CDATA[TX40.substr%280%2C+TX40.indexOf%28%22+%22%29%29]]></anyData>
+      </prop>
+      <prop className="String" name="FamilyName" propType="SIMPLE">
+        <anyData><![CDATA[TX40.substr%28TX40.indexOf%28%22+%22%29+%2B+1%29]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="BRANCH" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaBranch"
+      id="BranchOperation4" x="430" y="1330">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="Condition" name="conditions" nbrCols="1"
+        nbrRows="3" propType="ARRAY">
+        <pfObject className="pfObject-Condition" name="0" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Create]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn100]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22CREATE%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="1" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Update]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn110]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22UPDATE%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="2" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Delete]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn120]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22DELETE%22]]></anyData>
+          </prop>
+        </pfObject>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="UserTask"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn110" x="630" y="1330">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiUserTask%22+%26+_actionName%3D%22Update%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_authenticatedUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiUserProfile%3D%22%3C%21USID%3E%22+%26+PfiTask.TaskName%3D%22%3C%21ROLL%3E%22+%26+PfiTask.TaskType%3D%222%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn110" x="730" y="1330">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="UserTask"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn100" x="630" y="1230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiUserTask%22+%26+_actionName%3D%22Create%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_authenticatedUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiUserProfile%3D%22%3C%21USID%3E%22+%26+PfiTask.TaskName%3D%22%3C%21ROLL%3E%22+%26+PfiTask.TaskType%3D%222%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn100" x="730" y="1230">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="UserTask"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn120" x="630" y="1430">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22%3C%21LPSDataArea%3E%22+%26+_module%3D%22pfi%22+%26+_objectName%3D%22PfiUserTask%22+%26+_actionName%3D%22Delete%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_authenticatedUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+PfiUserProfile%3D%22%3C%21USID%3E%22+%26+PfiTask.TaskName%3D%22%3C%21ROLL%3E%22+%26+PfiTask.TaskType%3D%222%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn120" x="730" y="1430">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="BRANCH" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaBranch"
+      id="BranchOperation2" x="430" y="530">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="Condition" name="conditions" nbrCols="1"
+        nbrRows="3" propType="ARRAY">
+        <pfObject className="pfObject-Condition" name="0" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Create]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn40]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22CREATE%22+%26%26+EMTP+%3D%3D+%2204%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="1" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Update]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn50]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22UPDATE%22+%26%26+EMTP+%3D%3D+%2204%22]]></anyData>
+          </prop>
+        </pfObject>
+        <pfObject className="pfObject-Condition" name="2" pfObjectType="SIMPLE">
+          <prop className="java.lang.String" name="naam" propType="SIMPLE">
+            <anyData><![CDATA[Delete]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="btexe" propType="SIMPLE">
+            <anyData><![CDATA[LMTxn60]]></anyData>
+          </prop>
+          <prop className="java.lang.String" name="expr" propType="SIMPLE">
+            <anyData><![CDATA[Operation+%3D%3D+%22DELETE%22+%26%26+EMTP+%3D%3D+%2204%22]]></anyData>
+          </prop>
+        </pfObject>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor-Email"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn50" x="630" y="530">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22person%22+%26+_objectName%3D%22Actor%22+%26+_actionName%3D%22Update%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Actor%3D%22%3C%21EMKY%3E%22+%26+ContactInfo.EmailAddress%3D%22%3C%21EMAL%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn50" x="730" y="530">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor-Email"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn40" x="630" y="430">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22person%22+%26+_objectName%3D%22Actor%22+%26+_actionName%3D%22Update%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Actor%3D%22%3C%21EMKY%3E%22+%26+ContactInfo.EmailAddress%3D%22%3C%21EMAL%3E%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn40" x="730" y="430">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="LM" caption="Actor-Email"
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaLandmark"
+      id="LMTxn60" x="630" y="630">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="conversionStatus" propType="SIMPLE">
+        <anyData><![CDATA[0]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="configurationName" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="transactionString" propType="SIMPLE">
+        <anyData><![CDATA[_dataArea%3D%22gen%22+%26+_module%3D%22person%22+%26+_objectName%3D%22Actor%22+%26+_actionName%3D%22Update%22+%26+_actionOperator%3D%22NONE%22+%26+_actionType%3D%22SingleRecordQuery%22+%26+_runAsUser%3D%22%22+%26+_pageSize%3D%2230%22+%26+_relationName%3D%22%22+%26+_setName%3D%22%22+%26+_asOfDate%3D%22%22+%26+_effectiveDate%3D%22%22+%26+Actor%3D%22%3C%21EMKY%3E%22+%26+ContactInfo.EmailAddress%3D%22%22]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean"
+        name="stopProcessOnActivityError" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <prop className="java.lang.Boolean" name="enforceEscape" propType="SIMPLE">
+        <anyData><![CDATA[true]]></anyData>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+    <activity activityType="ItEnd" caption=""
+      className="com.lawson.bpm.processflow.workFlow.flowGraph.FgaIterEnd"
+      id="End-LMTxn60" x="730" y="630">
+      <prop className="java.lang.String" name="_activityCheckPoint" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <prop className="java.lang.String" name="breakCondition" propType="SIMPLE">
+        <anyData><![CDATA[2]]></anyData>
+      </prop>
+      <prop className="java.lang.String" name="breakConditionText" propType="SIMPLE">
+        <anyData/>
+      </prop>
+      <OnActivityError>
+        <notify>false</notify>
+        <to/>
+        <cc/>
+        <bcc/>
+        <from/>
+        <subject/>
+        <body/>
+        <goto>false</goto>
+        <activity/>
+        <log>false</log>
+        <logString/>
+        <emailCon/>
+      </OnActivityError>
+    </activity>
+  </activities>
+  <edges>
+    <edge edgeType="BRANCH" from="BranchOperation1" id="0" to="LMTxn10"/>
+    <edge edgeType="BRANCH" from="BranchOperation1" id="1" to="LMTxn20"/>
+    <edge edgeType="BRANCH" from="BranchOperation1" id="2" to="LMTxn30"/>
+    <edge edgeType="NORMAL" from="LMTxn10" id="3" to="End-LMTxn10"/>
+    <edge edgeType="NORMAL" from="End-LMTxn10" id="4" to="LMTxn11"/>
+    <edge edgeType="NORMAL" from="LMTxn11" id="5" to="End-LMTxn11"/>
+    <edge edgeType="NORMAL" from="End-LMTxn11" id="6" to="LMTxn12"/>
+    <edge edgeType="NORMAL" from="LMTxn12" id="7" to="End-LMTxn12"/>
+    <edge edgeType="NORMAL" from="End-LMTxn12" id="8" to="LMTxn13"/>
+    <edge edgeType="NORMAL" from="LMTxn13" id="9" to="End-LMTxn13"/>
+    <edge edgeType="NORMAL" from="LMTxn20" id="10" to="End-LMTxn20"/>
+    <edge edgeType="NORMAL" from="End-LMTxn20" id="11" to="End"/>
+    <edge edgeType="NORMAL" from="LMTxn30" id="12" to="End-LMTxn30"/>
+    <edge edgeType="NORMAL" from="End-LMTxn30" id="13" to="LMTxn31"/>
+    <edge edgeType="NORMAL" from="LMTxn31" id="14" to="End-LMTxn31"/>
+    <edge edgeType="NORMAL" from="End-LMTxn31" id="15" to="LMTxn32"/>
+    <edge edgeType="NORMAL" from="LMTxn32" id="16" to="End-LMTxn32"/>
+    <edge edgeType="NORMAL" from="End-LMTxn32" id="17" to="LMTxn33"/>
+    <edge edgeType="NORMAL" from="LMTxn33" id="18" to="End-LMTxn33"/>
+    <edge edgeType="NORMAL" from="LMTxn14" id="19" to="End-LMTxn14"/>
+    <edge edgeType="NORMAL" from="End-LMTxn14" id="20" to="End"/>
+    <edge edgeType="NORMAL" from="End-LMTxn13" id="21" to="LMTxn14"/>
+    <edge edgeType="NORMAL" from="End-LMTxn33" id="22" to="LMTxn34"/>
+    <edge edgeType="NORMAL" from="LMTxn34" id="23" to="End-LMTxn34"/>
+    <edge edgeType="NORMAL" from="End-LMTxn34" id="24" to="End"/>
+    <edge edgeType="NORMAL" from="Start" id="25" to="BranchDocumentName"/>
+    <edge edgeType="BRANCH" from="BranchDocumentName" id="26" to="Assign1"/>
+    <edge edgeType="BRANCH" from="BranchDocumentName" id="27" to="BranchOperation3"/>
+    <edge edgeType="BRANCH" from="BranchDocumentName" id="28" to="BranchOperation4"/>
+    <edge edgeType="BRANCH" from="BranchDocumentName" id="29" to="BranchOperation2"/>
+    <edge edgeType="NORMAL" from="LMTxn70" id="30" to="End-LMTxn70"/>
+    <edge edgeType="BRANCH" from="BranchOperation3" id="31" to="LMTxn70"/>
+    <edge edgeType="BRANCH" from="BranchOperation3" id="32" to="LMTxn80"/>
+    <edge edgeType="BRANCH" from="BranchOperation3" id="33" to="LMTxn90"/>
+    <edge edgeType="NORMAL" from="End-LMTxn70" id="34" to="End"/>
+    <edge edgeType="NORMAL" from="LMTxn80" id="35" to="End-LMTxn80"/>
+    <edge edgeType="NORMAL" from="LMTxn90" id="36" to="End-LMTxn90"/>
+    <edge edgeType="NORMAL" from="End-LMTxn80" id="37" to="End"/>
+    <edge edgeType="NORMAL" from="End-LMTxn90" id="38" to="End"/>
+    <edge edgeType="NORMAL" from="Assign1" id="39" to="BranchOperation1"/>
+    <edge edgeType="NORMAL" from="LMTxn110" id="40" to="End-LMTxn110"/>
+    <edge edgeType="NORMAL" from="LMTxn100" id="41" to="End-LMTxn100"/>
+    <edge edgeType="NORMAL" from="LMTxn120" id="42" to="End-LMTxn120"/>
+    <edge edgeType="BRANCH" from="BranchOperation4" id="43" to="LMTxn100"/>
+    <edge edgeType="BRANCH" from="BranchOperation4" id="44" to="LMTxn110"/>
+    <edge edgeType="BRANCH" from="BranchOperation4" id="45" to="LMTxn120"/>
+    <edge edgeType="NORMAL" from="End-LMTxn100" id="46" to="End"/>
+    <edge edgeType="NORMAL" from="End-LMTxn110" id="47" to="End"/>
+    <edge edgeType="NORMAL" from="End-LMTxn120" id="48" to="End"/>
+    <edge edgeType="NORMAL" from="LMTxn50" id="49" to="End-LMTxn50"/>
+    <edge edgeType="NORMAL" from="LMTxn40" id="50" to="End-LMTxn40"/>
+    <edge edgeType="NORMAL" from="LMTxn60" id="51" to="End-LMTxn60"/>
+    <edge edgeType="BRANCH" from="BranchOperation2" id="52" to="LMTxn40"/>
+    <edge edgeType="BRANCH" from="BranchOperation2" id="53" to="LMTxn50"/>
+    <edge edgeType="BRANCH" from="BranchOperation2" id="54" to="LMTxn60"/>
+    <edge edgeType="NORMAL" from="End-LMTxn40" id="55" to="End"/>
+    <edge edgeType="NORMAL" from="End-LMTxn50" id="56" to="End"/>
+    <edge edgeType="NORMAL" from="End-LMTxn60" id="57" to="End"/>
+  </edges>
+</process>
