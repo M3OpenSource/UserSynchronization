@@ -3,10 +3,8 @@
 
 # Change this to your environments
 $conf = @{
-    "DEV"      = ("HERTZ1633", "M3FDBDEV", "lmdevipa")
-    "TST"      = ("HERTZ1633", "M3FDBTST", "lmtstipa")
-    "CloudDEV" = ("HEDBNP",    "M3FDBDEV", "lmdevlpa")
-    "CloudTST" = ("HEDBNP",    "M3FDBTST", "lmtstlpa")
+    "DEV"      = ("host", "M3FDBDEV", "lmdevipa")
+    "TST"      = ("host", "M3FDBTST", "lmtstipa")
 }
 
 # Ask which environment to sync
