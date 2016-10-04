@@ -2,26 +2,26 @@
 
 PowerShell script to mirror the users from M3 to IPA
 Thibaud Lopez Schneider
-2016-09-21
+2016-10-03
 
 DOCUMENTATION:
 https://m3ideas.org/2016/09/11/user-synchronization-between-m3-and-ipa-part-2/
 
 HOW TO USE:
 0) You will need the PowerShell snapin for SQL Server to be able to run the invoke-sqlcmd
-1) Set the conf values to suit your environments
+1) Set the $conf values below to match your environments
 2) Execute this script in the IPA folder, e.g. D:\Infor\LMTST>m3users.ps1
 3) It will ask which environment to sync (e.g. DEV, TST)
 4) It will ask for the database password
-5) It will generate the file m3users.txt for the secadm command
+5) It will generate the files m3users_add.txt and m3users_delete.txt for the secadm command
 6) It will generate the file m3users.xml for the importPFIdata command
-7) It will execute the secadm import
-8) It will execute the importPFIdata import
-9) If the import fails, try the import manually
+7) It will execute the secadm import; if it fails, try it manually
+8) It will execute the importPFIdata import; if it fails, try it manually
+9) Optionally, execute the secadm command with the delete file
 
 #>
 
-# Change these values to suit your environments (M3 database host, M3 database name, IPA data area)
+# Change these values to matcCh your environments (M3 database host, M3 database name, IPA data area)
 $conf = @{
     "DEV"      = ("host", "M3DBDEV", "lmdevipa")
     "TST"      = ("host", "M3DBTST", "lmtstipa")
@@ -40,8 +40,9 @@ $Username = $c.UserName
 $Password = $c.GetNetworkCredential().password
 
 # Prepare the output files
-out-file m3users.txt -Encoding ascii
-out-file m3users.xml -Encoding ascii
+out-file m3users_add.txt    -Encoding ascii
+out-file m3users_delete.txt -Encoding ascii
+out-file m3users.xml        -Encoding ascii
 
 
 # XML stub for importPFIdata
@@ -88,15 +89,31 @@ function row($table, $columns) {
 # M3 Users (MNS150/CRS611)
 sql "SELECT DISTINCT JUUSID, JUTX40, CBEMAL FROM MVXJDTA.CMNUSR U LEFT OUTER JOIN MVXJDTA.CEMAIL E ON U.JUUSID=E.CBEMKY AND E.CBEMTP='04'" | ForEach-Object {
 
-    # to IPA Identity, Actor, Actor-Identity, Actor-Role
+    # split, trim, and replace blank spaces
+    $usid = $_.JUUSID.ToString().Trim()
     $firstname, $lastname = $_.JUTX40 -split " ",2,"simplematch"
-    "identity add SSOPV2 $($_.JUUSID) --password null"                                                                | out-file -Append $HOME\m3users.txt -Encoding ascii
-    "actor add $($_.JUUSID) --firstname $firstname --lastname ""$lastname"" --ContactInfo.EmailAddress $($_.CBEMAL)"  | out-file -Append $HOME\m3users.txt -Encoding ascii
-    "actor assign $($_.JUUSID) SSOPV2 $($_.JUUSID)"                                                                   | out-file -Append $HOME\m3users.txt -Encoding ascii
-    "role assign $($_.JUUSID) InbasketUser_ST"                                                                        | out-file -Append $HOME\m3users.txt -Encoding ascii
+    $firstname = "--firstname $firstname"
+    $lastname = if ($lastname) { $lastname.Trim() } else { "" }
+    $lastname = if ($lastname -ne '') { "--lastname " + ($lastname -replace " ", "\ ") } else { "--lastname ." <# must set something, otherwise "Field Family Name is required"; PENDING: how to set blank value #> }
+    $email = $_.CBEMAL.ToString().Trim()
+    $email = if ($email -ne '') { "--ContactInfo.EmailAddress " + ($email -replace " ", "\ ") } else { "" }
 
+    # to IPA Identity, Actor, Actor-Identity, Actor-Role
+    "identity add SSOPV2 $usid --password null"    | out-file -Append $HOME\m3users_add.txt -Encoding ascii
+    "actor add $usid $firstname $lastname $email"  | out-file -Append $HOME\m3users_add.txt -Encoding ascii
+    "actor assign $usid SSOPV2 $usid"              | out-file -Append $HOME\m3users_add.txt -Encoding ascii
+    "role assign $usid InbasketUser_ST"            | out-file -Append $HOME\m3users_add.txt -Encoding ascii
+
+	# delete
+	if ($usid -ine "lawson" -And $usid -ine "M3ADMIN" -And $usid -ine "M3API" -And $usid -ine "M3SRVADM" -And $usid -ine "MVXSECOFR" -And $usid -ine "SYSTEM") {
+		"role remove $usid InbasketUser_ST"  | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+		"actor remove $usid SSOPV2 $usid"    | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+		"actor delete $usid --complete"      | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+		"identity delete SSOPV2 $usid"       | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+	}
+	
     # to IPA User Profile
-    row $WFUSRPROFL ((column "WF-RM-ID" $_.JUUSID), (column "" "")) | out-null # PENDING: remove the dummy column
+    row $WFUSRPROFL ((column "WF-RM-ID" $usid), (column "" "")) | out-null # PENDING: remove the dummy column
 
 }
 
@@ -115,7 +132,7 @@ $x.OuterXml | out-file -Append $HOME\m3users.xml -Encoding ascii
 
 # Execute the import
 enter.cmd
-secadm -f $HOME\m3users.txt -d gen
+secadm -f $HOME\m3users_add.txt -d gen
 env\bin\importPFIdata.bat $dataarea -f $HOME\m3users.xml
 
 
@@ -125,4 +142,5 @@ PENDING:
 - How to avoid console output; meanwhile, I have to pipe to out-null
 - How to set out-file encoding default to ascii without having to set each time
 - Unfortunately, secadm is ASCII only, whereas M3 is UTF-8, thus we will loose data; if we have UTF8 characters then secadm will throw "Can not encode the string for field FamilyName in character set ISO-8859-1 supported by the RDBMS for business class Actor on GEN [...] FAILED"
+- How to set blank value for lastname; meanwhile, I have to pass some dummy value
 #>
