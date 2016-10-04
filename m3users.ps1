@@ -104,14 +104,14 @@ sql "SELECT DISTINCT JUUSID, JUTX40, CBEMAL FROM MVXJDTA.CMNUSR U LEFT OUTER JOI
     "actor assign $usid SSOPV2 $usid"              | out-file -Append $HOME\m3users_add.txt -Encoding ascii
     "role assign $usid InbasketUser_ST"            | out-file -Append $HOME\m3users_add.txt -Encoding ascii
 
-	# delete
-	if ($usid -ine "lawson" -And $usid -ine "M3ADMIN" -And $usid -ine "M3API" -And $usid -ine "M3SRVADM" -And $usid -ine "MVXSECOFR" -And $usid -ine "SYSTEM") {
-		"role remove $usid InbasketUser_ST"  | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
-		"actor remove $usid SSOPV2 $usid"    | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
-		"actor delete $usid --complete"      | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
-		"identity delete SSOPV2 $usid"       | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
-	}
-	
+    # delete
+    if ($usid -ine "lawson" -And $usid -ine "M3ADMIN" -And $usid -ine "M3API" -And $usid -ine "M3SRVADM" -And $usid -ine "MVXSECOFR" -And $usid -ine "SYSTEM") {
+        "role remove $usid InbasketUser_ST"  | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+        "actor remove $usid SSOPV2 $usid"    | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+        "actor delete $usid --complete"      | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+        "identity delete SSOPV2 $usid"       | out-file -Append $HOME\m3users_delete.txt -Encoding ascii
+    }
+    
     # to IPA User Profile
     row $WFUSRPROFL ((column "WF-RM-ID" $usid), (column "" "")) | out-null # PENDING: remove the dummy column
 
