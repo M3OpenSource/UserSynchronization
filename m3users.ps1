@@ -2,27 +2,40 @@
 
 PowerShell script to mirror the users from M3 to IPA
 Thibaud Lopez Schneider
-2016-10-03
+2016-11-07
 
 DOCUMENTATION:
 https://m3ideas.org/2016/09/11/user-synchronization-between-m3-and-ipa-part-2/
 
+INSTALLATION:
+1) To use Get-Credential, you will need to install Windows Management Framework 4.0
+2) To use invoke-sqlcmd, you will need to:
+    a) Install PowerShell Extensions for SQL Server from the SQL Server 2016 Feature Pack > PowerShellTools.msi
+    b) Execute this command in PowerShell as administrator: Set-ExecutionPolicy RemoteSigned
+    c) Execute this command to install the PowerShell snapin for SQL Server: Import-Module SQLPS
+3) To use Active Directory in PowerShell, you need to install the module with these PowerShell commands:
+    Import-Module ServerManager
+    Add-WindowsFeature RSAT-AD-PowerShell
+
 HOW TO USE:
-0) You will need the PowerShell snapin for SQL Server to be able to run the invoke-sqlcmd
 1) Set the $conf values below to match your environments
 2) Execute this script in the IPA folder, e.g. D:\Infor\LMTST>m3users.ps1
 3) It will ask which environment to sync (e.g. DEV, TST)
 4) It will ask for the database password
 5) It will generate the files m3users_add.txt and m3users_delete.txt for the secadm command
 6) It will generate the file m3users.xml for the importPFIdata command
-7) It will execute the secadm import; if it fails, try it manually
-8) It will execute the importPFIdata import; if it fails, try it manually
+7) It will execute the secadm import; if it fails, try the import manually
+8) It will execute the importPFIdata import; if it fails, try the import manually
 9) Optionally, execute the secadm command with the delete file
 
 #>
 
-# Change these values to matcCh your environments (M3 database host, M3 database name, IPA data area)
+Import-Module SQLPS
+Import-Module ActiveDirectory
+
+# Change these values to matcCh your environments
 $conf = @{
+               # M3 DB host, M3 DB name, IPA data area
     "DEV"      = ("host", "M3DBDEV", "lmdevipa")
     "TST"      = ("host", "M3DBTST", "lmtstipa")
 }
@@ -96,6 +109,13 @@ sql "SELECT DISTINCT JUUSID, JUTX40, CBEMAL FROM MVXJDTA.CMNUSR U LEFT OUTER JOI
     $lastname = if ($lastname) { $lastname.Trim() } else { "" }
     $lastname = if ($lastname -ne '') { "--lastname " + ($lastname -replace " ", "\ ") } else { "--lastname ." <# must set something, otherwise "Field Family Name is required"; PENDING: how to set blank value #> }
     $email = $_.CBEMAL.ToString().Trim()
+
+    # alternatively with Active Directory
+    $aduser = Get-ADUser -Filter {(sAMAccountName -eq $usid) -and (ObjectClass -eq "user")} -Properties EmailAddress
+    $firstname = $aduser.GivenName
+    $lastname = $aduser.Surname
+    $email = $aduser.EmailAddress
+
     $email = if ($email -ne '') { "--ContactInfo.EmailAddress " + ($email -replace " ", "\ ") } else { "" }
 
     # to IPA Identity, Actor, Actor-Identity, Actor-Role
