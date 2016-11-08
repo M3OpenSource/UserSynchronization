@@ -13,7 +13,7 @@ INSTALLATION:
     a) Install PowerShell Extensions for SQL Server from the SQL Server 2016 Feature Pack > PowerShellTools.msi
     b) Execute this command in PowerShell as administrator: Set-ExecutionPolicy RemoteSigned
     c) Execute this command to install the PowerShell snapin for SQL Server: Import-Module SQLPS
-3) To use Active Directory in PowerShell, you need to install the module with these PowerShell commands:
+3) To use Active Directory in PowerShell, you need to install the Remote Server Administration Tools Active Directory module with these PowerShell commands:
     Import-Module ServerManager
     Add-WindowsFeature RSAT-AD-PowerShell
 
