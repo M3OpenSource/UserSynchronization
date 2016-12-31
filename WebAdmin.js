@@ -30,7 +30,7 @@ var roles_users = {};
 		var TX40 = r.NameValue[1].Value.trim();
 		var firstname = TX40.substring(0, TX40.indexOf(" "));
 		var lastname = TX40.substring(TX40.indexOf(" ") + 1);
-		users[USID] = [firstname, lastname];
+		users[USID] = [firstname, lastname, ""];
 	});
 	// CRS111
 	var response = await fetch("/m3api-rest/execute/CRS111MI/List;maxrecs=0;returncols=EMKY,EMAL?EMTP=04", { credentials: "same-origin", headers: { "Accept": "application/json" }});
@@ -38,7 +38,7 @@ var roles_users = {};
 	data.MIRecord.map(r => {
 		var EMKY = r.NameValue[0].Value.trim();
 		var EMAL = r.NameValue[1].Value.trim();
-		users[EMKY].push(EMAL);
+		users[EMKY][2] = EMAL;
 	});
 	// MNS405
 	var response = await fetch("/m3api-rest/execute/MNS410MI/LstRoles;maxrecs=0;returncols=ROLL,TX40", { credentials: "same-origin", headers: { "Accept": "application/json" }});
