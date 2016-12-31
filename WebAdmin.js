@@ -4,11 +4,14 @@ https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
 Thibaud Lopez Schneider, 2016-12-31
 
 NOTES:
-- Run WebAdmin_.js first to extract the data, and copy/paste the serialized JSON here for the second part
+- Run part 1 and part 2 separately, keeping the result as global variables
 - Replace the data area with yours (lmprdlpa in my case)
 - Add more fields if needed; currently firstname, lastname, and email address only
 - Add more roles if needed; currently InbasketUser_ST only
 - To delete, replace action=Create by action=Delete
+
+PENDING:
+- Call M3 API REST WS with CORS
 */
 
 
