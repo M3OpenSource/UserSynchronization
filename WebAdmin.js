@@ -1,7 +1,7 @@
 /*
 Synchronize users between Infor M3 and Infor Process Automation (IPA)
 https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
-Thibaud Lopez Schneider, 2016-12-31
+Thibaud Lopez Schneider, 2017-01-04
 
 NOTES:
 - Run part 1 and part 2 separately, keeping the result as global variables
@@ -25,7 +25,7 @@ var roles_users = {};
 	// MNS150
 	var response = await fetch("/m3api-rest/execute/MNS150MI/LstUserData;maxrecs=0;returncols=USID,TX40", { credentials: "same-origin", headers: { "Accept": "application/json" }});
 	var data = await response.json();
-	data.MIRecord.map(r => {
+	if (data.MIRecord) data.MIRecord.map(r => {
 		var USID = r.NameValue[0].Value.trim();
 		var TX40 = r.NameValue[1].Value.trim();
 		var firstname = TX40.substring(0, TX40.indexOf(" "));
@@ -35,7 +35,7 @@ var roles_users = {};
 	// CRS111
 	var response = await fetch("/m3api-rest/execute/CRS111MI/List;maxrecs=0;returncols=EMKY,EMAL?EMTP=04", { credentials: "same-origin", headers: { "Accept": "application/json" }});
 	var data = await response.json();
-	data.MIRecord.map(r => {
+	if (data.MIRecord) data.MIRecord.map(r => {
 		var EMKY = r.NameValue[0].Value.trim();
 		var EMAL = r.NameValue[1].Value.trim();
 		users[EMKY][2] = EMAL;
@@ -43,7 +43,7 @@ var roles_users = {};
 	// MNS405
 	var response = await fetch("/m3api-rest/execute/MNS410MI/LstRoles;maxrecs=0;returncols=ROLL,TX40", { credentials: "same-origin", headers: { "Accept": "application/json" }});
 	var data = await response.json();
-	data.MIRecord.map(r => {
+	if (data.MIRecord) data.MIRecord.map(r => {
 		var ROLL = r.NameValue[0].Value.trim();
 		var TX40 = r.NameValue[1].Value.trim();
 		roles[ROLL] = TX40;
@@ -53,7 +53,7 @@ var roles_users = {};
 		roles_users[ROLL] = [];
 		var response = await fetch("/m3api-rest/execute/MDBREADMI/LstCMNRUS10;maxrecs=0;returncols=USID?ROLL=" + encodeURIComponent(ROLL), { credentials: "same-origin", headers: { "Accept": "application/json" }});
 		var data = await response.json();
-		data.MIRecord.map(r => {
+		if (data.MIRecord) data.MIRecord.map(r => {
 			var USID = r.NameValue[0].Value.trim();
 			roles_users[ROLL].push(USID);
 		});
