@@ -4,6 +4,7 @@ https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
 Thibaud Lopez Schneider, 2017-01-05
 
 VERSIONS:
+V6: 2017-01-05: added time estimate + non-empty firstname/lastname
 V5: 2017-01-05: added loop for multiple actions
 V4: 2017-01-05: added the /UserManagement response message to the output console + fixed the UserManagement body + fixed actions Create/Update/Delete
 V3: 2017-01-04: added M3 API verification 'if (data.MIRecord)' for when there's no record returned
@@ -38,8 +39,8 @@ var roles_users = {};
 	if (data.MIRecord) data.MIRecord.map(r => {
 		var USID = r.NameValue[0].Value.trim();
 		var TX40 = r.NameValue[1].Value.trim();
-		var firstname = TX40.substring(0, TX40.indexOf(" "));
-		var lastname = TX40.substring(TX40.indexOf(" ") + 1);
+		var firstname = TX40.substring(0, TX40.indexOf(" ")); firstname = (firstname.length != 0 ? firstname : ".");
+		var lastname = TX40.substring(TX40.indexOf(" ") + 1); lastname = (lastname.length != 0 ? lastname : ".");
 		users[USID] = [firstname, lastname, ""];
 	});
 	// CRS111
@@ -82,6 +83,17 @@ var roles_users = {};
 var actions = ["Create", "Update"]; // e.g. Create, Update, Delete
 var actor_roles = ["InbasketUser_ST"]; // BasicAdminAccess_ST, ConfigConsoleSecurityAdmin_ST, DataAreaAdmin_ST, GlobalUIConfigAccess, InbasketUser_ST, JobQueueServer_ST, LsuserappAccess_ST, ProcessAutomationReporting_ST, ProcessDesigner_ST, ProcessServerAllAccess_ST, ProcessServerReadAccess_ST, SecurityAdministrator_ST, 
 var dataareas = ["lmtstlpa"]; // e.g. lmdevlpa, lmtstlpa
+
+// ETA
+var u = Object.keys(users).length;
+var v = Object.keys(roles).length;
+var w = Object.keys(roles_users).length;
+var x = actions.length;
+var y = actor_roles.length;
+var z = dataareas.length;
+var n = x*(u*(3+y)+z*(u+v+w*u));
+console.log("Number of requests: " + Number(n).toLocaleString());
+console.log("Estimated duration: " + Number(Math.round(n*0.133/60)).toLocaleString() + "mn");
 
 (async() => {
 	for (var i in actions) {
