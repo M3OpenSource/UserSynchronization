@@ -4,6 +4,7 @@ https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
 Thibaud Lopez Schneider, 2017-01-05
 
 VERSIONS:
+V5: 2017-01-05: added loop for multiple actions
 V4: 2017-01-05: added the /UserManagement response message to the output console + fixed the UserManagement body + fixed actions Create/Update/Delete
 V3: 2017-01-04: added M3 API verification 'if (data.MIRecord)' for when there's no record returned
 V2: 2016-12-31: added M3 API to extract MNS150, CRS111, MNS405, MNS410, instead of manual variables
@@ -12,7 +13,7 @@ V0: 2016-12-30: added fetch API to /UserManagement for Identity, Actor, Actor-Id
 	
 NOTES:
 - Run part 1 and part 2 separately, keeping the result as global variables
-- Set the variable action (e.g. Create|Update|Delete) (it works correctly with: Identity, Actor, Actor-Identity, Actor-Roles, except for Actor-Roles it gives false messages that record doesn't exist or already exists when it's not true)
+- Set the variable actions (e.g. Create|Update|Delete) (it works correctly with: Identity, Actor, Actor-Identity, Actor-Roles, except for Actor-Roles it gives false messages that record doesn't exist or already exists when it's not true)
 - Set the variable actor_roles (e.g. InbasketUser_ST)
 - Set the variable dataareas (e.g. lmtstlpa)
 - Add more fields to the Actor if needed (currently firstname, lastname, and email address only)
@@ -78,120 +79,123 @@ var roles_users = {};
 
 // PART 2: run this section on an authenticated IPA web admin page, with users/roles/roles_users previously set as global variables
 
-var action = "Create"; // e.g. Create, Update, Delete
+var actions = ["Create", "Update"]; // e.g. Create, Update, Delete
 var actor_roles = ["InbasketUser_ST"]; // BasicAdminAccess_ST, ConfigConsoleSecurityAdmin_ST, DataAreaAdmin_ST, GlobalUIConfigAccess, InbasketUser_ST, JobQueueServer_ST, LsuserappAccess_ST, ProcessAutomationReporting_ST, ProcessDesigner_ST, ProcessServerAllAccess_ST, ProcessServerReadAccess_ST, SecurityAdministrator_ST, 
 var dataareas = ["lmtstlpa"]; // e.g. lmdevlpa, lmtstlpa
 
 (async() => {
-	// gen
-	for (var USID in users) {
-		var user = users[USID];
-		var firstname = user[0];
-		var lastname = user[1];
-		var emailaddress = user[2];
+	for (var i in actions) {
+		var action = actions[i];
+		// gen
+		for (var USID in users) {
+			var user = users[USID];
+			var firstname = user[0];
+			var lastname = user[1];
+			var emailaddress = user[2];
 
-		// Identity
-		var response = await fetch("/UserManagement/action/Identity._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
-			body : JSON.stringify({
-				"actionRequestArray" : [{
-						"dataView" : {
-							"fields" : {
-								"Service" : { "value" : "SSOPV2" },
-								"Identity" : { "value" : "User:" + USID },
-								"ServiceType": { "value" : "FormBased" }
-							}
-						},
-						"actionSpec" : { "name" : action }
-					}
-				],
-				"list" : "Identity().IdentityList" })
-		});
-		var data = await response.json();
-		if (data) console.log([data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
-
-		// Actor
-		var response = await fetch("/UserManagement/action/Actor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
-			body : JSON.stringify({
-				"actionRequestArray" : [{
-						"dataView" : {
-							"fields" : {
-								"Actor" : { "value" : USID },
-								"PersonName_prd_GivenName" : { "value" : firstname },
-								"PersonName_prd_FamilyName" : { "value" : lastname },
-								"ContactInfo_prd_EmailAddress" : { "value" : emailaddress }
-							}
-						},
-						"actionSpec" : { "name" : action }
-					}
-				],
-				"form" : "Actor.DefaultActorForm" })
-		});
-		var data = await response.json();
-		if (data) console.log([data[0].dataView.fields.Actor.value, data[0].message]);
-
-		// Actor-Identity
-		var response = await fetch("/UserManagement/action/IdentityActor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
-			body : JSON.stringify({
-				"actionRequestArray" : [{
-						"dataView" : {
-							"fields" : {
-								"Actor" : { "value" : USID },
-								"Service" : { "value" : "SSOPV2" },
-								"Identity" : { "value" : "User:" + USID }
-							}
-						},
-						"actionSpec" : { "name" : action }
-					}
-				],
-				"list" : "IdentityActor().SecondaryIdentityActorList" })
-		});
-		var data = await response.json();
-		if (data) console.log([data[0].dataView.fields.Actor.value, data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
-
-		// Actor-Roles
-		for (var i in actor_roles) {			
-			var response = await fetch("/UserManagement/action/ActorRole._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+			// Identity
+			var response = await fetch("/UserManagement/action/Identity._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
 				body : JSON.stringify({
 					"actionRequestArray" : [{
 							"dataView" : {
 								"fields" : {
-									"Actor" : { "value" : USID },
-									"ActorRole_prd_Role" : { "value" : actor_roles[i] }
+									"Service" : { "value" : "SSOPV2" },
+									"Identity" : { "value" : "User:" + USID },
+									"ServiceType": { "value" : "FormBased" }
 								}
 							},
 							"actionSpec" : { "name" : action }
 						}
 					],
-					"form" : "ActorRole().DefaultActorRoleForm" })
+					"list" : "Identity().IdentityList" })
 			});
 			var data = await response.json();
-			if (data) console.log([data[0].dataView.fields.Actor.value, data[0].dataView.fields.ActorRole_prd_Role.value, data[0].message]);
-		}
-	}
-	// dataarea
-	for (var i in dataareas) {
-		var dataarea = dataareas[i];
-		// Users
-		for (var USID in users) {
-			await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
-				body : "bto=PfiUserProfile&PfiUserProfile=" + encodeURIComponent(USID)
+			if (data) console.log([data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
+
+			// Actor
+			var response = await fetch("/UserManagement/action/Actor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+				body : JSON.stringify({
+					"actionRequestArray" : [{
+							"dataView" : {
+								"fields" : {
+									"Actor" : { "value" : USID },
+									"PersonName_prd_GivenName" : { "value" : firstname },
+									"PersonName_prd_FamilyName" : { "value" : lastname },
+									"ContactInfo_prd_EmailAddress" : { "value" : emailaddress }
+								}
+							},
+							"actionSpec" : { "name" : action }
+						}
+					],
+					"form" : "Actor.DefaultActorForm" })
 			});
-		}
-		// Tasks
-		for (var ROLL in roles) {
-			var TX40 = roles[ROLL];
-			await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
-				body : "bto=PfiTask&PfiTask.TaskName=" + encodeURIComponent(ROLL) + "&Description=" + encodeURIComponent(TX40)
+			var data = await response.json();
+			if (data) console.log([data[0].dataView.fields.Actor.value, data[0].message]);
+
+			// Actor-Identity
+			var response = await fetch("/UserManagement/action/IdentityActor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+				body : JSON.stringify({
+					"actionRequestArray" : [{
+							"dataView" : {
+								"fields" : {
+									"Actor" : { "value" : USID },
+									"Service" : { "value" : "SSOPV2" },
+									"Identity" : { "value" : "User:" + USID }
+								}
+							},
+							"actionSpec" : { "name" : action }
+						}
+					],
+					"list" : "IdentityActor().SecondaryIdentityActorList" })
 			});
-		}
-		// User-Tasks
-		for (var ROLL in roles_users) {
-			var users_ = roles_users[ROLL];
-			for (var j in users_) {
-				var USID = users_[j];
-				await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
-					body : "bto=PfiUserTask&PfiTask.TaskName=" + encodeURIComponent(ROLL) + "&PfiUserProfile=" + encodeURIComponent(USID) + "&PfiTask.TaskType=2"
+			var data = await response.json();
+			if (data) console.log([data[0].dataView.fields.Actor.value, data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
+
+			// Actor-Roles
+			for (var j in actor_roles) {			
+				var response = await fetch("/UserManagement/action/ActorRole._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+					body : JSON.stringify({
+						"actionRequestArray" : [{
+								"dataView" : {
+									"fields" : {
+										"Actor" : { "value" : USID },
+										"ActorRole_prd_Role" : { "value" : actor_roles[j] }
+									}
+								},
+								"actionSpec" : { "name" : action }
+							}
+						],
+						"form" : "ActorRole().DefaultActorRoleForm" })
 				});
+				var data = await response.json();
+				if (data) console.log([data[0].dataView.fields.Actor.value, data[0].dataView.fields.ActorRole_prd_Role.value, data[0].message]);
+			}
+		}
+		// dataarea
+		for (var k in dataareas) {
+			var dataarea = dataareas[k];
+			// Users
+			for (var USID in users) {
+				await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
+					body : "bto=PfiUserProfile&PfiUserProfile=" + encodeURIComponent(USID)
+				});
+			}
+			// Tasks
+			for (var ROLL in roles) {
+				var TX40 = roles[ROLL];
+				await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
+					body : "bto=PfiTask&PfiTask.TaskName=" + encodeURIComponent(ROLL) + "&Description=" + encodeURIComponent(TX40)
+				});
+			}
+			// User-Tasks
+			for (var ROLL in roles_users) {
+				var users_ = roles_users[ROLL];
+				for (var j in users_) {
+					var USID = users_[j];
+					await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
+						body : "bto=PfiUserTask&PfiTask.TaskName=" + encodeURIComponent(ROLL) + "&PfiUserProfile=" + encodeURIComponent(USID) + "&PfiTask.TaskType=2"
+					});
+				}
 			}
 		}
 	}
