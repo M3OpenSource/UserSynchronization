@@ -1,17 +1,26 @@
 /*
 Synchronize users between Infor M3 and Infor Process Automation (IPA)
 https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
-Thibaud Lopez Schneider, 2017-01-04
+Thibaud Lopez Schneider, 2017-01-05
 
+VERSIONS:
+V4: 2017-01-05: added the /UserManagement response message to the output console + fixed the UserManagement body + fixed actions Create/Update/Delete
+V3: 2017-01-04: added M3 API verification 'if (data.MIRecord)' for when there's no record returned
+V2: 2016-12-31: added M3 API to extract MNS150, CRS111, MNS405, MNS410, instead of manual variables
+V1: 2016-12-30: added fetch API to /LpaAdmin for Users, Tasks, User-Tasks
+V0: 2016-12-30: added fetch API to /UserManagement for Identity, Actor, Actor-Identity, Actor-Roles
+	
 NOTES:
 - Run part 1 and part 2 separately, keeping the result as global variables
-- Replace the data area with yours (lmprdlpa in my case)
-- Add more fields if needed; currently firstname, lastname, and email address only
-- Add more roles if needed; currently InbasketUser_ST only
-- To delete, replace action=Create by action=Delete
+- Set the variable action (e.g. Create|Update|Delete) (it works correctly with: Identity, Actor, Actor-Identity, Actor-Roles, except for Actor-Roles it gives false messages that record doesn't exist or already exists when it's not true)
+- Set the variable actor_roles (e.g. InbasketUser_ST)
+- Set the variable dataareas (e.g. lmtstlpa)
+- Add more fields to the Actor if needed (currently firstname, lastname, and email address only)
 
 PENDING:
-- Call M3 API REST WS with CORS
+- Call M3 API REST WS with CORS (part 1), with host:port and user:password, to be able to execute within context of part 2
+- Update/Delete of all /LpaAdmin (Users, Tasks, User-Tasks), haven't tried yet
+- Show response of all /LpaAdmin (Users, Tasks, User-Tasks), it's malformed XHTML
 */
 
 
@@ -69,8 +78,9 @@ var roles_users = {};
 
 // PART 2: run this section on an authenticated IPA web admin page, with users/roles/roles_users previously set as global variables
 
-var actor_roles = ["InbasketUser_ST"];
-var dataareas = ["lmtstlpa"];
+var action = "Create"; // e.g. Create, Update, Delete
+var actor_roles = ["InbasketUser_ST"]; // BasicAdminAccess_ST, ConfigConsoleSecurityAdmin_ST, DataAreaAdmin_ST, GlobalUIConfigAccess, InbasketUser_ST, JobQueueServer_ST, LsuserappAccess_ST, ProcessAutomationReporting_ST, ProcessDesigner_ST, ProcessServerAllAccess_ST, ProcessServerReadAccess_ST, SecurityAdministrator_ST, 
+var dataareas = ["lmtstlpa"]; // e.g. lmdevlpa, lmtstlpa
 
 (async() => {
 	// gen
@@ -79,23 +89,28 @@ var dataareas = ["lmtstlpa"];
 		var firstname = user[0];
 		var lastname = user[1];
 		var emailaddress = user[2];
+
 		// Identity
-		await fetch("/UserManagement/action/Identity._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+		var response = await fetch("/UserManagement/action/Identity._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
 			body : JSON.stringify({
 				"actionRequestArray" : [{
 						"dataView" : {
 							"fields" : {
 								"Service" : { "value" : "SSOPV2" },
-								"FormBasedIdentityProperties_prd_User" : { "value" : USID }
+								"Identity" : { "value" : "User:" + USID },
+								"ServiceType": { "value" : "FormBased" }
 							}
 						},
-						"actionSpec" : { "type" : "CREATE", "name" : "CreateFormBasedIdentity" }
+						"actionSpec" : { "name" : action }
 					}
 				],
-				"form" : "Identity().CreateFormBasedIdentity" })
+				"list" : "Identity().IdentityList" })
 		});
+		var data = await response.json();
+		if (data) console.log([data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
+
 		// Actor
-		await fetch("/UserManagement/action/Actor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+		var response = await fetch("/UserManagement/action/Actor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
 			body : JSON.stringify({
 				"actionRequestArray" : [{
 						"dataView" : {
@@ -106,13 +121,16 @@ var dataareas = ["lmtstlpa"];
 								"ContactInfo_prd_EmailAddress" : { "value" : emailaddress }
 							}
 						},
-						"actionSpec" : { "type" : "CREATE", "name" : "Create" }
+						"actionSpec" : { "name" : action }
 					}
 				],
 				"form" : "Actor.DefaultActorForm" })
 		});
+		var data = await response.json();
+		if (data) console.log([data[0].dataView.fields.Actor.value, data[0].message]);
+
 		// Actor-Identity
-		await fetch("/UserManagement/action/IdentityActor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+		var response = await fetch("/UserManagement/action/IdentityActor._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
 			body : JSON.stringify({
 				"actionRequestArray" : [{
 						"dataView" : {
@@ -122,14 +140,17 @@ var dataareas = ["lmtstlpa"];
 								"Identity" : { "value" : "User:" + USID }
 							}
 						},
-						"actionSpec" : { "type" : "CREATE", "name" : "AssignExistingIdentityToActor" }
+						"actionSpec" : { "name" : action }
 					}
 				],
-				"form" : "IdentityActor[ByActSvcIdent]().SecondaryIdentityActorForm" })
+				"list" : "IdentityActor().SecondaryIdentityActorList" })
 		});
+		var data = await response.json();
+		if (data) console.log([data[0].dataView.fields.Actor.value, data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
+
 		// Actor-Roles
 		for (var i in actor_roles) {			
-			await fetch("/UserManagement/action/ActorRole._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
+			var response = await fetch("/UserManagement/action/ActorRole._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
 				body : JSON.stringify({
 					"actionRequestArray" : [{
 							"dataView" : {
@@ -138,11 +159,13 @@ var dataareas = ["lmtstlpa"];
 									"ActorRole_prd_Role" : { "value" : actor_roles[i] }
 								}
 							},
-							"actionSpec" : { "type" : "CREATE", "name" : "AssignExistingRoleToActor" }
+							"actionSpec" : { "name" : action }
 						}
 					],
 					"form" : "ActorRole().DefaultActorRoleForm" })
 			});
+			var data = await response.json();
+			if (data) console.log([data[0].dataView.fields.Actor.value, data[0].dataView.fields.ActorRole_prd_Role.value, data[0].message]);
 		}
 	}
 	// dataarea
