@@ -4,6 +4,7 @@ https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
 Thibaud Lopez Schneider, 2017-01-05
 
 VERSIONS:
+V7: 2017-01-05: added actions Update/Delete for all /LpaAdmin (Users, Tasks, User-Tasks) + added DONE at end + corrected ETA
 V6: 2017-01-05: added time estimate + non-empty firstname/lastname
 V5: 2017-01-05: added loop for multiple actions
 V4: 2017-01-05: added the /UserManagement response message to the output console + fixed the UserManagement body + fixed actions Create/Update/Delete
@@ -87,11 +88,11 @@ var dataareas = ["lmtstlpa"]; // e.g. lmdevlpa, lmtstlpa
 // ETA
 var u = Object.keys(users).length;
 var v = Object.keys(roles).length;
-var w = Object.keys(roles_users).length;
+var w = 0; for (var ROLL in roles_users) w += roles_users[ROLL].length; w
 var x = actions.length;
 var y = actor_roles.length;
 var z = dataareas.length;
-var n = x*(u*(3+y)+z*(u+v+w*u));
+var n = x*(u*(3+y)+z*(u+v+w));
 console.log("Number of requests: " + Number(n).toLocaleString());
 console.log("Estimated duration: " + Number(Math.round(n*0.133/60)).toLocaleString() + "mn");
 
@@ -188,27 +189,32 @@ console.log("Estimated duration: " + Number(Math.round(n*0.133/60)).toLocaleStri
 			var dataarea = dataareas[k];
 			// Users
 			for (var USID in users) {
-				await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
+				var response = await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=" + action + "&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
 					body : "bto=PfiUserProfile&PfiUserProfile=" + encodeURIComponent(USID)
 				});
+				var text = await response.text();
 			}
 			// Tasks
 			for (var ROLL in roles) {
 				var TX40 = roles[ROLL];
-				await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
+				var response = await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=" + action + "&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
 					body : "bto=PfiTask&PfiTask.TaskName=" + encodeURIComponent(ROLL) + "&Description=" + encodeURIComponent(TX40)
 				});
+				var text = await response.text();
 			}
 			// User-Tasks
 			for (var ROLL in roles_users) {
 				var users_ = roles_users[ROLL];
 				for (var j in users_) {
 					var USID = users_[j];
-					await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=Create&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
+					var response = await fetch("/" + dataarea + "/LpaAdmin/lm?service=form&action=" + action + "&dataarea=" + dataarea, { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/x-www-form-urlencoded" },
 						body : "bto=PfiUserTask&PfiTask.TaskName=" + encodeURIComponent(ROLL) + "&PfiUserProfile=" + encodeURIComponent(USID) + "&PfiTask.TaskType=2"
 					});
+					var text = await response.text();
 				}
 			}
 		}
 	}
+	// DONE
+	console.log("DONE");
 })();
