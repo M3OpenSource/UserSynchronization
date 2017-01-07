@@ -1,9 +1,10 @@
 /*
 Synchronize users between Infor M3 and Infor Process Automation (IPA)
 https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
-Thibaud Lopez Schneider, 2017-01-05
+Thibaud Lopez Schneider, 2017-01-07
 
 VERSIONS:
+V8: 2017-01-07: added administrator_roles
 V7: 2017-01-05: added actions Update/Delete for all /LpaAdmin (Users, Tasks, User-Tasks) + added DONE at end + corrected ETA
 V6: 2017-01-05: added time estimate + non-empty firstname/lastname
 V5: 2017-01-05: added loop for multiple actions
@@ -82,8 +83,10 @@ var roles_users = {};
 // PART 2: run this section on an authenticated IPA web admin page, with users/roles/roles_users previously set as global variables
 
 var actions = ["Create", "Update"]; // e.g. Create, Update, Delete
-var actor_roles = ["InbasketUser_ST"]; // BasicAdminAccess_ST, ConfigConsoleSecurityAdmin_ST, DataAreaAdmin_ST, GlobalUIConfigAccess, InbasketUser_ST, JobQueueServer_ST, LsuserappAccess_ST, ProcessAutomationReporting_ST, ProcessDesigner_ST, ProcessServerAllAccess_ST, ProcessServerReadAccess_ST, SecurityAdministrator_ST, 
 var dataareas = ["lmtstlpa"]; // e.g. lmdevlpa, lmtstlpa
+var actor_roles = ["InbasketUser_ST"];
+var administrators = ["M3SRVADM", "MVXSECOFR", "LAWSON", "THIBAUD"];
+var administrator_roles = ["BasicAdminAccess_ST", "ConfigConsoleSecurityAdmin_ST", "DataAreaAdmin_ST", "GlobalUIConfigAccess", "InbasketUser_ST", "JobQueueServer_ST", "LsuserappAccess_ST", "ProcessAutomationReporting_ST", "ProcessDesigner_ST", "ProcessServerAllAccess_ST", "ProcessServerReadAccess_ST", "SecurityAdministrator_ST"];
 
 // ETA
 var u = Object.keys(users).length;
@@ -165,14 +168,15 @@ console.log("Estimated duration: " + Number(Math.round(n*0.133/60)).toLocaleStri
 			if (data) console.log([data[0].dataView.fields.Actor.value, data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
 
 			// Actor-Roles
-			for (var j in actor_roles) {			
+			var actor_roles_ = administrators.includes(USID.toUpperCase()) ? administrator_roles : actor_roles;
+			for (var j in actor_roles_) {			
 				var response = await fetch("/UserManagement/action/ActorRole._execute?csk.gen=true", { credentials: "same-origin", method: "POST", headers: { "Content-Type" : "application/json; charset=UTF-8" },
 					body : JSON.stringify({
 						"actionRequestArray" : [{
 								"dataView" : {
 									"fields" : {
 										"Actor" : { "value" : USID },
-										"ActorRole_prd_Role" : { "value" : actor_roles[j] }
+										"ActorRole_prd_Role" : { "value" : actor_roles_[j] }
 									}
 								},
 								"actionSpec" : { "name" : action }
