@@ -1,9 +1,10 @@
 /*
 Synchronize users between Infor M3 and Infor Process Automation (IPA)
 https://m3ideas.org/2016/12/30/user-synchronization-between-m3-and-ipa-part-4
-Thibaud Lopez Schneider, 2017-01-07
+Thibaud Lopez Schneider
 
 VERSIONS:
+V9: 2017-01-17: corrected JSON of Identity Create
 V8: 2017-01-07: added administrator_roles
 V7: 2017-01-05: added actions Update/Delete for all /LpaAdmin (Users, Tasks, User-Tasks) + added DONE at end + corrected ETA
 V6: 2017-01-05: added time estimate + non-empty firstname/lastname
@@ -117,13 +118,14 @@ console.log("Estimated duration: " + Number(Math.round(n*0.133/60)).toLocaleStri
 								"fields" : {
 									"Service" : { "value" : "SSOPV2" },
 									"Identity" : { "value" : "User:" + USID },
+									"FormBasedIdentityProperties_prd_User" : { "value" : USID },
 									"ServiceType": { "value" : "FormBased" }
 								}
 							},
 							"actionSpec" : { "name" : action }
 						}
 					],
-					"list" : "Identity().IdentityList" })
+					"form" : "Identity().CompositeIdentityForm" })
 			});
 			var data = await response.json();
 			if (data) console.log([data[0].dataView.fields.Service.value, data[0].dataView.fields.Identity.value, data[0].message]);
